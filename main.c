@@ -31,6 +31,8 @@ int resetTamagotchi() {
     buttonOp2 = 0; 
 
     //다마고치 태어나는 모션
+    // Bitmap_reset_1,
+	// Bitmap_reset_2,
     return 0;
 }
 
@@ -46,10 +48,14 @@ int printEmotion() {
     else if (happiness > 10){
         // 행복한 상태 모션
         hunger-=1;
+    // Bitmap_status_happy_1,
+	// Bitmap_status_happy_2,
     } 
     else if (happiness <= 10) {
         // 슬픈 상태 모션
         hunger-=1;
+    // Bitmap_status_sad_1,
+	// Bitmap_status_sad_2
 
     }
     return 0;
@@ -61,6 +67,8 @@ int pooping(){
     {
         poop = 7;
         //똥 방치 모션
+    // Bitmap_status_poop_1,
+	// Bitmap_status_poop_2,
         poop -= 1;
         if (poop <= 0) happyDown();
         if (buttonOp1 == 1) break;
@@ -68,16 +76,22 @@ int pooping(){
     }
     poop = 0;
     //똥치우기 모션   
+    // Bitmap_motion_poop_1
+	// Bitmap_motion_poop_2
+	// Bitmap_motion_poop_3
+	// Bitmap_motion_poop_4
     happyUp();
 
     return 0;
 }
 
 int menu() {
+    // Bitmap_menu
     if (buttonMenu == 1) return 0;
 
     else if (buttonOp1 ==1) {// 밥주기 선택 창
         if (buttonOp1 >= 2) {
+        // Bitmap_menu_food
         buttonOp1 = 0;
         feed();
         }
@@ -85,6 +99,7 @@ int menu() {
 
     else if (buttonOp2 == 1) { // 놀아주기 선택 창
         if (buttonOp2 >= 2) {
+        // Bitmap_menu_play
         buttonOp2 = 0;
         play(); 
         }
@@ -95,6 +110,8 @@ int menu() {
 void happyUp(){
     happiness += 10;
     // 행복 모션
+    // Bitmap_motion_happy_1,
+	// Bitmap_motion_happy_2,
 
 }
 
@@ -103,17 +120,23 @@ void happyDown(){
     happiness -= 10;
     
     // 슬픔 모션
+    // Bitmap_motion_sad_1,
+	// Bitmap_motion_sad_2,
 
 }
 
 void feed() {
     // 밥 먹는 모션
+    // Bitmap_motion_eat_1,
+	// Bitmap_motion_eat_2,
+	// Bitmap_motion_eat_3,
     hunger = 30;
     happyUp();
 }
 
 void play() {
     // 노는 모션
+    // Bitmap_play_ready,
     hunger -= 10;
     happyUp();
     
