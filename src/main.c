@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 // 버튼 변수, 아두이노의 버튼 누를 시 값을 해당 변수에 저장 ( 0에서 1씩 추가 )
 int buttonMenu = 0; //메뉴
@@ -10,6 +11,8 @@ int buttonOp2 = 0; //옵션 2
 int poop;       // 똥 방치 상태
 int hunger;     // 배고픔 수준
 int happiness;  // 행복 수준
+
+int playscore = 0; //play 점수
 
 // 함수 선언
 int resetTamagotchi(); // 다마고치 리셋 함수
@@ -163,8 +166,25 @@ void feed() {
 }
 
 void play() {
-    // 노는 모션
-    // Bitmap_play_ready,
+    clock_t start_time = clock();  // 현재 시간 기록
+	// Bitmap_play_ready
+	// Bitmap_play_ready3
+	// Bitmap_play_ready2
+	// Bitmap_play_ready1
+    while ((clock() - start_time) / CLOCKS_PER_SEC < 5) {
+		if ( buttonOp2 == 1){
+		//버튼 눌럿을때 모션
+		playscore ++;
+		}
+    }
+	//끝 비트맵
+if (playscore > 20) {
+	playscore = 0;
+	happyUp();	
+
+}
+else happydown();
+	playscore = 0;
     hunger -= 10;
     happyUp();
     
