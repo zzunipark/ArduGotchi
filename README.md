@@ -24,11 +24,21 @@
 
 ### 💫 Getting Started
 ```
+# Make sure all jumper & modules are connected on Arduino Mega.
+
 # Clone Project
 $ git clone https://github.com/m2ri1/C_project_Tamagochi.git
 
 # Run Project
-$ cd "folder directory located main.c" && gcc main.c -o main && "folder directory located main.c"main
+$ cd /src/folder/location
+$ Use Arduino IDE 2.1.0 or Higher
+```
+
+### ✅ Requirements
+```
+Adafruit_GFX # https://github.com/adafruit/Adafruit-GFX-Library
+Adafruit_SSD1306 # https://github.com/adafruit/Adafruit_SSD1306
+ezButton # https://github.com/ArduinoGetStarted/button
 ```
 
 ### 💻 Used Languages
