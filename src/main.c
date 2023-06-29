@@ -6,30 +6,25 @@
 #include <Adafruit_SSD1306.h>
 #include <ezButton.h>
 
-ezButton button1(11);  // create ezButton object that attach to pin 6;
-ezButton button2(12);  // create ezButton object that attach to pin 7;
-ezButton button3(13);  // create ezButton object that attach to pin 8;
+ezButton button1(11);
+ezButton button2(12);
+ezButton button3(13);
 
 #define SCREEN_WIDTH 128  // OLED 스크린 세로 길이 지정
 #define SCREEN_HEIGHT 64  // OLED 스크린 가로 길이 지정
 #define OLED_RESET 4      // OLED 리셋 핀 지정
 
 // #### 전역 변수 선언 ####
-// 버튼 변수, 아두이노의 버튼 누를 시 값을 해당 변수에 저장 ( 1 할당 )
-int buttonMenu = 0;  //메뉴
-int buttonOp1 = 0;   //옵션 1
-int buttonOp2 = 0;   //옵션 2
 
 // 다마고치 상태
 int poop;       // 똥 방치 상태
 int hunger;     // 배고픔 수준
 int happiness;  // 행복 수준
 
-int playscore = 0;  // 놀이 점수
+int playscore;  // 놀이 점수
 
 
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);  // 디스플레이 객체 지정
-
 
 // #### 도트 ####
 // 'motion_poop_1', 128x64px
@@ -1976,45 +1971,40 @@ const unsigned char Bitmap_play_stop[] PROGMEM = {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-
 void setup() {
-  
-  button1.setDebounceTime(20);  // set debounce time to 50 milliseconds
-  button2.setDebounceTime(20);  // set debounce time to 50 milliseconds
-  button3.setDebounceTime(20);  // set debounce time to 50 milliseconds
+
+  button1.setDebounceTime(60);  // set debounce time to 50 milliseconds
+  button2.setDebounceTime(60);  // set debounce time to 50 milliseconds
+  button3.setDebounceTime(60);  // set debounce time to 50 milliseconds
 }
 
-void loop() { // ######### main #############
 
+void loop() {  // ######### main #############
   resetTamagotchi();
+  mainloop();
+}
+
+void mainloop() {
 
   while (1) {
-  button1.loop(); //메뉴 버튼
-  button2.loop(); //op1
-  button3.loop(); //op2
+    button1.loop();  //메뉴 버튼
+    button2.loop();  //op1
+    button3.loop();  //op2
 
-  if (button1.isPressed()){  //메뉴
-    menu();
-  }
-
-    else if (button3.isPressed()) { //리셋
-    break;
+    if (button3.isPressed()) {  //리셋
+      break;
     }
 
     else {
       printEmotion();
     }
-    
-    }
+  }
 }
 
-int resetTamagotchi() {
+void resetTamagotchi() {
   hunger = 50;
   happiness = 30;
   poop = 0;
-  buttonMenu = 0;
-  buttonOp1 = 0;
-  buttonOp2 = 0;
 
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
 
@@ -2034,7 +2024,7 @@ int resetTamagotchi() {
   display.drawBitmap(0, 0, Bitmap_reset_2, 128, 64, 1);
   display.display();
   delay(200);
-    display.clearDisplay();
+  display.clearDisplay();
   display.drawBitmap(0, 0, Bitmap_reset_1, 128, 64, 1);
   display.display();
   delay(200);
@@ -2042,7 +2032,6 @@ int resetTamagotchi() {
   display.drawBitmap(0, 0, Bitmap_reset_2, 128, 64, 1);
   display.display();
   delay(200);
-
   display.clearDisplay();
   display.drawBitmap(0, 0, Bitmap_reset_1, 128, 64, 1);
   display.display();
@@ -2060,158 +2049,343 @@ int resetTamagotchi() {
   display.drawBitmap(0, 0, Bitmap_reset_2, 128, 64, 1);
   display.display();
   delay(600);
-
 }
 
-//####################################
+void checkCondition() {
+  // 조건을 확인하는 코드
+  button1.loop();
+  if (button1.isPressed()) {  //메뉴
+    menu();
+  }
+}
 
-int printEmotion() {
-    // int random;
-    // random = rand()%9; // 난수 생성해서 랜덤으로 똥 싸기
-    // if (random == 1){
-    //     hunger-=1;
-    //     pooping();
+void checkcleanpoop() {
+  // 조건을 확인하는 코드
+  button1.loop();
+  if (button1.isPressed()) {  //메뉴
+    cleanpoop();
+  }
+}
 
-    // }
-    if (hunger <= 0) happiness = 10;
-    
-    if (happiness > 10){
+void printEmotion() {
+  int random;
+  random = rand() % 15;  // 난수 생성해서 랜덤으로 똥 싸기
+  if (random == 1) {
+    hunger -= 1;
+    pooping();
+  }
+  if (hunger <= 0) happiness = 10;  // 많이 배고파도 값 고정
+
+  if (happiness > 10) {
     display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
     display.clearDisplay();
     display.drawBitmap(0, 0, Bitmap_status_happy_1, 128, 64, 1);
     display.display();
-    delay(500);
+
+    delay(100);
+    checkCondition();
+    delay(100);
+    checkCondition();
+    delay(100);
+    checkCondition();
+    delay(100);
+    checkCondition();
+    delay(100);
+    checkCondition();
+    delay(100);
+    checkCondition();
+    delay(100);
+    checkCondition();
+
     display.clearDisplay();
     display.drawBitmap(0, 0, Bitmap_status_happy_2, 128, 64, 1);
     display.display();
-    delay(500);
-      hunger-=1;
 
-    } 
-    else if (happiness <= 10) {
-     display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+    delay(100);
+    checkCondition();
+    delay(100);
+    checkCondition();
+    delay(100);
+    checkCondition();
+    delay(100);
+    checkCondition();
+    delay(100);
+    checkCondition();
+    delay(100);
+    checkCondition();
+    delay(100);
+    checkCondition();
+
+    hunger -= 1;
+
+  } else if (happiness <= 10) {
+    display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
     display.clearDisplay();
     display.drawBitmap(0, 0, Bitmap_status_sad_1, 128, 64, 1);
     display.display();
-    delay(500);
+    delay(100);
+    checkCondition();
+    delay(100);
+    checkCondition();
+    delay(100);
+    checkCondition();
+    delay(100);
+    checkCondition();
+    delay(100);
+    checkCondition();
+    delay(100);
+    checkCondition();
+    delay(100);
+    checkCondition();
     display.clearDisplay();
     display.drawBitmap(0, 0, Bitmap_status_sad_2, 128, 64, 1);
     display.display();
-    delay(500);
-    hunger-=1;
-    }
+    delay(100);
+    checkCondition();
+    delay(100);
+    checkCondition();
+    delay(100);
+    checkCondition();
+    delay(100);
+    checkCondition();
+    delay(100);
+    checkCondition();
+    delay(100);
+    checkCondition();
+    delay(100);
+    checkCondition();
+    hunger -= 1;
+  }
 }
 
 
-int pooping(){
-    while(1)
-    {
-        poop = 7;
-        //똥 방치 모션
-    // Bitmap_status_poop_1,
-	// Bitmap_status_poop_2,
-        poop -= 1;
-        if (poop <= 0) happyDown();
-        if (buttonOp1 == 1) break;
-
-    }
-    poop = 0;
-    //똥치우기 모션   
-    // Bitmap_motion_poop_1
-	// Bitmap_motion_poop_2
-	// Bitmap_motion_poop_3
-	// Bitmap_motion_poop_4
-    happyUp();
-
-    return 0;
-}
-
-int menu() {
-
+void pooping() {
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-     display.clearDisplay();
-      display.drawBitmap(0, 0, Bitmap_menu, 128, 64, 1);
-      display.display();
 
-while (1) {
-  button1.loop(); //메뉴 버튼
-  button2.loop(); //op1
-  button3.loop(); //op2
-  if (button1.isPressed())  break;
-
-  else if (button2.isPressed()) {// 밥주기 선택 창
+  poop = 7;
+  while (1) {
+    button1.loop();
     display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-     display.clearDisplay();
+
+
+    display.clearDisplay();
+    display.drawBitmap(0, 0, Bitmap_status_poop_1, 128, 64, 1);
+    display.display();
+    delay(100);
+    checkcleanpoop();
+    delay(100);
+    checkcleanpoop();
+    delay(100);
+    checkcleanpoop();
+    delay(100);
+    checkcleanpoop();
+    delay(100);
+    checkcleanpoop();
+    delay(100);
+    checkcleanpoop();
+    display.clearDisplay();
+    display.drawBitmap(0, 0, Bitmap_status_poop_2, 128, 64, 1);
+    display.display();
+    delay(100);
+    checkcleanpoop();
+    delay(100);
+    checkcleanpoop();
+    delay(100);
+    checkcleanpoop();
+    delay(100);
+    checkcleanpoop();
+    delay(100);
+    checkcleanpoop();
+    delay(100);
+    checkcleanpoop();
+
+    poop -= 1;
+
+    if (poop <= 0) happyDown();
+  }
+}
+
+void cleanpoop() {
+  poop = 0;
+  //똥치우기 모션
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_motion_poop_1, 128, 64, 1);
+  display.display();
+  delay(600);
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_motion_poop_2, 128, 64, 1);
+  display.display();
+  delay(600);
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_motion_poop_3, 128, 64, 1);
+  display.display();
+  delay(600);
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_motion_poop_4, 128, 64, 1);
+  display.display();
+  delay(600);
+
+  happyUp();
+}
+
+void menu() {
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_menu, 128, 64, 1);
+  display.display();
+
+  while (1) {
+    button1.loop();  // 메뉴 버튼
+    button2.loop();  // op1
+    button3.loop();  // op2
+    if (button1.isPressed()) break;
+    else if (button2.isPressed()) {  // 밥주기 선택 창
+      // 밥 주는 동작 수행
+      display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+      display.clearDisplay();
       display.drawBitmap(0, 0, Bitmap_menu_food, 128, 64, 1);
       display.display();
-    
+      delay(1000);
+      if (button2.isPressed()) {
+        feed();
+      }
     }
-
-  else if (button3.isPressed()) { // 놀아주기 선택 창
-    display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-        display.clearDisplay();
+    else if (button3.isPressed()) {  // 놀아주기 선택 창
+      // 놀아주는 동작 수행
+      display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+      display.clearDisplay();
       display.drawBitmap(0, 0, Bitmap_menu_play, 128, 64, 1);
       display.display();
-
+      delay(1000);
+      if (button3.isPressed()) {
+        play();
+        break;  // play() 함수 실행 후 메뉴로 돌아갑니다.
+      }
     }
-}
-}
-
-
-void happyUp(){
-    happiness += 10;
-    // 행복 모션
-    // Bitmap_motion_happy_1,
-	// Bitmap_motion_happy_2,
-
+  }
 }
 
-void happyDown(){
-    if (happiness > 0) 
+
+void happyUp() {
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+  happiness += 10;
+
+  // 행복 모션
+
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_motion_happy_1, 128, 64, 1);
+  display.display();
+  delay(300);
+
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_motion_happy_2, 128, 64, 1);
+  display.display();
+  delay(300);
+
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_motion_happy_1, 128, 64, 1);
+  display.display();
+  delay(300);
+
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_motion_happy_2, 128, 64, 1);
+  display.display();
+  delay(300);
+ 
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_motion_happy_1, 128, 64, 1);
+  display.display();
+  delay(300);
+
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_motion_happy_2, 128, 64, 1);
+  display.display();
+  delay(300);
+  mainloop();
+}
+
+void happyDown() {
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+
+  if (happiness > 0) {
     happiness -= 10;
-    
-    // 슬픔 모션
-    // Bitmap_motion_sad_1,
-	// Bitmap_motion_sad_2,
+  }
 
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_motion_sad_1, 128, 64, 1);
+  display.display();
+  delay(300);
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_motion_sad_2, 128, 64, 1);
+  display.display();
+  delay(300);
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_motion_sad_1, 128, 64, 1);
+  display.display();
+  delay(300);
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_motion_sad_2, 128, 64, 1);
+  display.display();
+  delay(300);
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_motion_sad_1, 128, 64, 1);
+  display.display();
+  delay(300);
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_motion_sad_2, 128, 64, 1);
+  display.display();
+  delay(300);
+  mainloop();
 }
 
 void feed() {
-    // 밥 먹는 모션
-    // Bitmap_motion_eat_1,
-	// Bitmap_motion_eat_2,
-	// Bitmap_motion_eat_3,
-    hunger = 30;
-    happyUp();
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_motion_eat_1, 128, 64, 1);
+  display.display();
+  delay(600);
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_motion_eat_2, 128, 64, 1);
+  display.display();
+  delay(600);
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_motion_eat_3, 128, 64, 1);
+  display.display();
+  delay(600);
+
+  hunger = 30;
+  happyUp();
 }
 
 void play() {
-	// Bitmap_play_ready
-	// Bitmap_play_ready3
-	// Bitmap_play_ready2
-	// Bitmap_play_ready1
-    clock_t start_time = clock();  // 현재 시간 기록
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_play_ing_1, 128, 64, 1);
+  display.display();
+  delay(350);
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_play_ing_2, 128, 64, 1);
+  display.display();
+  delay(600);
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_play_ing_1, 128, 64, 1);
+  display.display();
+  delay(350);
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_play_ing_2, 128, 64, 1);
+  display.display();
+  delay(600);
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_play_ing_1, 128, 64, 1);
+  display.display();
+  delay(350);
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_play_ing_2, 128, 64, 1);
+  display.display();
+  delay(600);
+  hunger =-10;
+  happyUp();
 
-    while ((clock() - start_time) / CLOCKS_PER_SEC < 5) {
-		//Bitmap_play_ing_1
-		if ( buttonOp2 == 1){
-		buttonOp2 = 0;
-		//Bitmap_play_ing_2
-		playscore ++;
-		}
-    }
-
-	// Bitmap_play_stop
-if (playscore > 20) {
-	playscore = 0;
-	happyUp();	
-
-}
-  else happyDown(); 
-	playscore = 0;
-    hunger -= 10;
-    happyUp();
-    
-}
-
-
+  mainloop();
+} 
