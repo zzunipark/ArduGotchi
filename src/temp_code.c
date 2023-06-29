@@ -2354,34 +2354,38 @@ void feed() {
   display.display();
   delay(600);
 
-
   hunger = 30;
   happyUp();
 }
 
-
 void play() {
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   display.clearDisplay();
-  display.drawBitmap(0, 0, Bitmap_play_ready, 128, 64, 1);
+  display.drawBitmap(0, 0, Bitmap_play_ing_1, 128, 64, 1);
+  display.display();
+  delay(350);
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_play_ing_2, 128, 64, 1);
   display.display();
   delay(600);
   display.clearDisplay();
-  display.drawBitmap(0, 0, Bitmap_play_ready3, 128, 64, 1);
+  display.drawBitmap(0, 0, Bitmap_play_ing_1, 128, 64, 1);
+  display.display();
+  delay(350);
+  display.clearDisplay();
+  display.drawBitmap(0, 0, Bitmap_play_ing_2, 128, 64, 1);
   display.display();
   delay(600);
   display.clearDisplay();
-  display.drawBitmap(0, 0, Bitmap_play_ready2, 128, 64, 1);
+  display.drawBitmap(0, 0, Bitmap_play_ing_1, 128, 64, 1);
   display.display();
-  delay(600);
+  delay(350);
   display.clearDisplay();
-  display.drawBitmap(0, 0, Bitmap_play_ready1, 128, 64, 1);
+  display.drawBitmap(0, 0, Bitmap_play_ing_2, 128, 64, 1);
   display.display();
   delay(600);
+  hunger =-10;
+  happyUp();
 
-  display.clearDisplay();
-  display.drawBitmap(0, 0, Bitmap_play_stop, 128, 64, 1);
-  display.display();
-    delay(600);
   mainloop();
-}  // play 함수의 끝에 중괄호 추가
+} 
