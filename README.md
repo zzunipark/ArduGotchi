@@ -21,6 +21,7 @@
 <br />
 
 아두이노를 이용해 다마고치를 제작하는 프로젝트입니다.
+🏆 2023 GSM C-Project 본선 진출작
 
 ### 💫 Getting Started
 ```
