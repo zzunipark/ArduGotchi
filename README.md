@@ -41,5 +41,8 @@ Adafruit_SSD1306 # https://github.com/adafruit/Adafruit_SSD1306
 ezButton # https://github.com/ArduinoGetStarted/button
 ```
 
+### 🧭 Circuit Diagram
+![circuitdiagram](/.github/circuit_diagram.png)
+
 ### 💻 Used Languages
 - &nbsp; Clang
