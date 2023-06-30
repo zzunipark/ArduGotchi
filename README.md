@@ -43,6 +43,7 @@ ezButton # https://github.com/ArduinoGetStarted/button
 
 ### 🧭 Circuit Diagram
 ![circuitdiagram](/.github/circuit_diagram.png)
+<small>Powered by Wokwi</small>
 
 ### 💻 Used Languages
 - &nbsp; Clang
