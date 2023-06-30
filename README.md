@@ -31,7 +31,7 @@ $ git clone https://github.com/m2ri1/C_project_Tamagochi.git
 
 # Run Project
 $ cd /src/folder/location
-$ Use Arduino IDE 2.1.0 or Higher
+$ Use Arduino IDE 2.1.0 or Higher to run code.
 ```
 
 ### ✅ Requirements
