@@ -17,6 +17,7 @@ ezButton button3(13);
 // #### 전역 변수 선언 ####
 
 // 다마고치 상태
+int score;
 int status; 
 int poop_gauge;
 
@@ -3688,7 +3689,7 @@ void menu() {
     display.drawBitmap(0, 0, bitmap_menu_play, 128, 64, 1);
     display.display();
     delay(1000);
-    playmenu();
+    play();
     }
   }
 }
@@ -3724,87 +3725,6 @@ void foodmenu() {
     mainloop();
     }
   }
-}
-
-void playmenu() {
-  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-  display.clearDisplay();
-  display.drawBitmap(0, 0, bitmap_menuplay, 128, 64, 1);
-  display.display();
-
-  while(1) {
-    button1.loop();
-    button2.loop(); 
-
-
-    if (button1.isPressed())
-    { 
-    display.clearDisplay();
-    display.drawBitmap(0, 0, bitmap_menuplay_choice, 128, 64, 1);
-    display.display();
-    delay(1000);
-    play_choice();
-    mainloop();
-    }
-
-    if (button2.isPressed())
-    { 
-    display.clearDisplay();
-    display.drawBitmap(0, 0, bitmap_menuplay_smash, 128, 64, 1);
-    display.display();
-    delay(1000);
-    play_smash();
-    mainloop();
-    }
-  }
-}
-
-void play_choice () {
-  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-  display.clearDisplay();
-  display.drawBitmap(0, 0, bitmap_play_ready_3, 128, 64, 1);
-  display.display();
-  delay(1000);
-  display.clearDisplay();
-  display.drawBitmap(0, 0, bitmap_play_ready_2, 128, 64, 1);
-  display.display();
-  delay(1000);
-  display.clearDisplay();
-  display.drawBitmap(0, 0, bitmap_play_ready_1, 128, 64, 1);
-  display.display();
-  delay(1000);
-  display.clearDisplay();
-  display.drawBitmap(0, 0, bitmap_play_ready, 128, 64, 1);
-  display.display();
-  delay(1000);
-
-  display.clearDisplay();
-  display.drawBitmap(0, 0, bitmap_play_choice, 128, 64, 1);
-  display.display();
-}
-
-void play_smash () {
-  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-  display.clearDisplay();
-  display.drawBitmap(0, 0, bitmap_play_ready_3, 128, 64, 1);
-  display.display();
-  delay(1000);
-  display.clearDisplay();
-  display.drawBitmap(0, 0, bitmap_play_ready_2, 128, 64, 1);
-  display.display();
-  delay(1000);
-  display.clearDisplay();
-  display.drawBitmap(0, 0, bitmap_play_ready_1, 128, 64, 1);
-  display.display();
-  delay(1000);
-  display.clearDisplay();
-  display.drawBitmap(0, 0, bitmap_play_ready, 128, 64, 1);
-  display.display();
-  delay(1000);
-
-  display.clearDisplay();
-  display.drawBitmap(0, 0, bitmap_play_smash_01, 128, 64, 1);
-  display.display();
 }
 
 void statusUp() {
@@ -3888,30 +3808,16 @@ void food_cookie() {
 void play() {
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
 
-  display.clearDisplay();
-  display.drawBitmap(0, 0, bitmap_play_smash_01, 128, 64, 1);
-  display.display();
-  delay(350);
-  display.clearDisplay();
-  display.drawBitmap(0, 0, bitmap_play_smash_02, 128, 64, 1);
-  display.display();
-  delay(600);
-  display.clearDisplay();
-  display.drawBitmap(0, 0, bitmap_play_smash_01, 128, 64, 1);
-  display.display();
-  delay(350);
-  display.clearDisplay();
-  display.drawBitmap(0, 0, bitmap_play_smash_02, 128, 64, 1);
-  display.display();
-  delay(600);
-  display.clearDisplay();
-  display.drawBitmap(0, 0, bitmap_play_smash_01, 128, 64, 1);
-  display.display();
-  delay(350);
-  display.clearDisplay();
-  display.drawBitmap(0, 0, bitmap_play_smash_02, 128, 64, 1);
-  display.display();
-  delay(600);
+  for(int i = 0; i < 5; i++) {
+    display.clearDisplay();
+    display.drawBitmap(0, 0, bitmap_play_smash_01, 128, 64, 1);
+    display.display();
+    delay(100);
+    display.clearDisplay();
+    display.drawBitmap(0, 0, bitmap_play_smash_02, 128, 64, 1);
+    display.display();
+    delay(100);
+  }
 
   statusUp();
 }
