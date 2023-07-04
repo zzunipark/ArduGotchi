@@ -11,7 +11,6 @@
   <img src="https://img.shields.io/github/stars/m2ri1/ArduGotchi?color=yellow">
   <br>
   <img src="https://img.shields.io/github/v/release/m2ri1/ArduGotchi">
-  [![GitHub release](https://img.shields.io/github/release/Naereen/StrapDown.js.svg)](https://GitHub.com/m2ri1/ArduGotchi/releases/)
 </div>
 
 #
