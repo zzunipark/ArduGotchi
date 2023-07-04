@@ -9,8 +9,7 @@
   <img src="https://img.shields.io/github/license/m2ri1/ArduGotchi"/>
   <img src="https://img.shields.io/github/commit-activity/w/m2ri1/ArduGotchi?color=%23green&link=#"/>
   <img src="https://img.shields.io/github/stars/m2ri1/ArduGotchi?color=yellow">
-  <img src="https://img.shields.io/github/v/release/m2ri1/ArduGotchi
-">
+  <img src="https://img.shields.io/github/v/release/m2ri1/ArduGotchi">
 </div>
 
 #
