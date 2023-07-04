@@ -22,10 +22,11 @@
 <br />
 <br />
 
-아두이노를 이용해 다마고치를 제작하는 프로젝트입니다.<br>
-🏆 2023 GSM C-Project 본선 진출작
+아두이노를 이용해 다마고치를 제작한 프로젝트입니다.<br>
+🏆 2023 GSM C-Project 본선 장려상 수상
 
 ### 💫 Getting Started
+
 ```
 # Make sure all jumper & modules are connected on Arduino Mega.
 
@@ -38,6 +39,7 @@ $ Use Arduino IDE 2.1.0 or Higher to run code.
 ```
 
 ### ✅ Requirements
+
 ```
 Adafruit_GFX # https://github.com/adafruit/Adafruit-GFX-Library
 Adafruit_SSD1306 # https://github.com/adafruit/Adafruit_SSD1306
@@ -45,8 +47,10 @@ ezButton # https://github.com/ArduinoGetStarted/button
 ```
 
 ### 🧭 Circuit Diagram
+
 ![circuitdiagram](/.github/circuit_diagram.png)
 <small>Powered by Wokwi</small>
 
 ### 💻 Used Languages
+
 - &nbsp; Clang
